@@ -186,7 +186,30 @@ function obtenerIDUsuario($usuarios)
                 </tr>
             </thead>
             <tbody>
-                //LOGICA DE PHP
+            <?php
+                if (!empty($usuarios)) {
+                    foreach ($usuarios as $usuario) {
+                        echo "<tr>";
+                        echo "<td>" . $usuario['nombre'] . "</td>";
+                        echo "<td>" . $usuario['apellido'] . "</td>";
+                        echo "<td>" . $usuario['direccion'] . "</td>";
+                        echo "<td>" . $usuario['edad'] . "</td>";
+                        echo "<td>" . $usuario['email'] . "</td>";
+                        echo "<td>" . $usuario['horario'] . "</td>";
+                        echo "<td>" . $usuario['team'] . "</td>";
+                        echo "<td>" . $usuario['trainer'] . "</td>";
+                        echo "<td>
+                                    <form method='POST' action=''>
+                                        <input type='hidden' name='seleccionar' value='" . $usuario['cedula'] . "'>
+                                        <button type='submit'>Seleccionar</button>
+                                    </form>
+                                </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8'>No se encontraron usuarios.</td></tr>";
+                }
+            ?>
             </tbody>
         </table>
     </div>
