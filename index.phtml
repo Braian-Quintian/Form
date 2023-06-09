@@ -1,3 +1,118 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $url = "https://6480fb33f061e6ec4d4a2271.mockapi.io/datos";
+    $cedula = $_POST['cedula'] ?? '';
+    if (isset($_POST['crear'])) {
+        crearRegistro($url);
+    } elseif (isset($_POST['borrar'])) {
+        borrarRegistro($url, $cedula);
+    } elseif (isset($_POST['actualizar'])) {
+        actualizarRegistro($url, $cedula);
+    } elseif (isset($_POST['consultar']) || isset($_POST['seleccionar'])) {
+        consultarRegistro($url, $cedula);
+    }
+}
+$url = "https://6480fb33f061e6ec4d4a2271.mockapi.io/datos";
+$usuarios = obtenerRegistros($url);
+function crearRegistro($url)
+{
+    $datos = obtenerDatosFormulario($_POST);
+    $data = json_encode($datos);
+    $response = hacerSolicitudHTTP($url, 'POST', $data);
+}
+
+function borrarRegistro($url, $cedula)
+{
+    $usuarios = obtenerUsuariosPorCedula($url, $cedula);
+    $id = obtenerIDUsuario($usuarios);
+    if (!empty($id)) {
+        $borrarUrl = "{$url}/{$id}";
+        $response = hacerSolicitudHTTP($borrarUrl, 'DELETE');
+    }
+}
+
+function actualizarRegistro($url, $cedula)
+{
+    $usuarios = obtenerUsuariosPorCedula($url, $cedula);
+    $id = obtenerIDUsuario($usuarios);
+    if (!empty($id)) {
+        $datos = obtenerDatosFormulario($_POST);
+        $data = json_encode($datos);
+        $actualizarUrl = "{$url}/{$id}";
+        $response = hacerSolicitudHTTP($actualizarUrl, 'PUT', $data);
+    }
+}
+
+function consultarRegistro($url, $cedula)
+{
+    $consultaUrl = "{$url}?search=" . urlencode($cedula);
+    $consultaUsuarios = obtenerUsuariosPorCedula($consultaUrl, $cedula);
+    if (!empty($consultaUsuarios)) {
+        $usuario = $consultaUsuarios[0];
+        $_POST['nombre'] = $usuario['nombre'];
+        $_POST['apellido'] = $usuario['apellido'];
+        $_POST['direccion'] = $usuario['direccion'];
+        $_POST['edad'] = $usuario['edad'];
+        $_POST['email'] = $usuario['email'];
+        $_POST['horario'] = $usuario['horario'];
+        $_POST['team'] = $usuario['team'];
+        $_POST['trainer'] = $usuario['trainer'];
+    }
+}
+
+function obtenerRegistros($url)
+{
+    $response = hacerSolicitudHTTP($url);
+    return json_decode($response, true);
+}
+
+function obtenerDatosFormulario($post)
+{
+    return [
+        'cedula' => $post['cedula'] ?? '',
+        'nombre' => $post['nombre'] ?? '',
+        'apellido' => $post['apellido'] ?? '',
+        'direccion' => $post['direccion'] ?? '',
+        'edad' => $post['edad'] ?? '',
+        'email' => $post['email'] ?? '',
+        'horario' => $post['horario'] ?? '',
+        'team' => $post['team'] ?? '',
+        'trainer' => $post['trainer'] ?? ''
+    ];
+}
+
+function hacerSolicitudHTTP($url, $method = 'GET', $data = null)
+{
+    $options = [
+        'http' => [
+            'method' => $method,
+            'header' => 'Content-Type: application/json',
+            'content' => $data
+        ]
+    ];
+
+    $context = stream_context_create($options);
+    return file_get_contents($url, false, $context);
+}
+
+function obtenerUsuariosPorCedula($url, $cedula)
+{
+    $consultaUrl = "{$url}?search=" . urlencode($cedula);
+    $response = hacerSolicitudHTTP($consultaUrl);
+    return json_decode($response, true);
+}
+
+function obtenerIDUsuario($usuarios)
+{
+    if (!empty($usuarios)) {
+        return $usuarios[0]['id'] ?? '';
+    }
+    return '';
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 
