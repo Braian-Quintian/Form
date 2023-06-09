@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factura</title>
-</head>
-<body>
-<form method="POST">
-    <div class="formulario">
-        <div class="div1">
-            <input name="nombre" type="text" placeholder="Nombre:" value="<?php echo $_POST['nombre'] ?? ''; ?>" autocomplete="off"><br>
-            <input name="apellido" type="text" placeholder="Apellido:" value="<?php echo $_POST['apellido'] ?? ''; ?>" autocomplete="off"><br>
-            <input name="direccion" type="text" placeholder="Dirección" value="<?php echo $_POST['direccion'] ?? ''; ?>" autocomplete="off">
-        </div>
-        <div class="div2">
-            <h1>Campuslands</h1><br>
-            <input name="edad" type="number" placeholder="Edad:" value="<?php echo $_POST['edad'] ?? ''; ?>" autocomplete="off"><br>
-            <input name="email" type="email" placeholder="Email" value="<?php echo $_POST['email'] ?? ''; ?>" autocomplete="off">
-        </div>
-        <div class="div3">
-            <label>Horario de Trabajo</label>
-            <input name="horario" type="time" placeholder="HH:MM" value="<?php echo $_POST['horario'] ?? ''; ?>" autocomplete="off"><br>
-            <input name="team" type="text" placeholder="Team:" value="<?php echo $_POST['team'] ?? ''; ?>" autocomplete="off"><br>
-            <input name="trainer" type="text" placeholder="Trainer:" value="<?php echo $_POST['trainer'] ?? ''; ?>" autocomplete="off">
-        </div>
-        <div class="div4">
-            <div>
-                <button type="submit" value="crear" name="crear">Crear</button>
-                <button type="submit" value="borrar" name="borrar">Borrar</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Factura</title>
+    </head>
+
+    <body>
+        <form method="POST">
+            <div class="formulario">
+                <div class="div1">
+                    <input name="nombre" type="text" placeholder="Nombre:" value="<?php echo $_POST['nombre'] ?? ''; ?>" autocomplete="off"><br>
+                    <input name="apellido" type="text" placeholder="Apellido:" value="<?php echo $_POST['apellido'] ?? ''; ?>" autocomplete="off"><br>
+                    <input name="direccion" type="text" placeholder="Dirección" value="<?php echo $_POST['direccion'] ?? ''; ?>" autocomplete="off">
+                </div>
+                <div class="div2">
+                    <h1>Campuslands</h1><br>
+                    <input name="edad" type="number" placeholder="Edad:" value="<?php echo $_POST['edad'] ?? ''; ?>" autocomplete="off"><br>
+                    <input name="email" type="email" placeholder="Email" value="<?php echo $_POST['email'] ?? ''; ?>" autocomplete="off">
+                </div>
+                <div class="div3">
+                    <label>Horario de Trabajo</label>
+                    <input name="horario" type="time" placeholder="HH:MM" value="<?php echo $_POST['horario'] ?? ''; ?>" autocomplete="off"><br>
+                    <input name="team" type="text" placeholder="Team:" value="<?php echo $_POST['team'] ?? ''; ?>" autocomplete="off"><br>
+                    <input name="trainer" type="text" placeholder="Trainer:" value="<?php echo $_POST['trainer'] ?? ''; ?>" autocomplete="off">
+                </div>
+                <div class="div4">
+                    <div>
+                        <button type="submit" value="crear" name="crear">Crear</button>
+                        <button type="submit" value="borrar" name="borrar">Borrar</button>
+                    </div>
+                    <div>
+                        <button type="submit" value="actualizar" name="actualizar">Actualizar</button>
+                        <button type="submit" value="consultar" name="consultar">Consultar</button>
+                    </div>
+                    <div>
+                        <input type="number" name="cedula" placeholder="Cédula" required autocomplete="off">
+                    </div>
+                </div>
             </div>
-            <div>
-                <button type="submit" value="actualizar" name="actualizar">Actualizar</button>
-                <button type="submit" value="consultar" name="consultar">Consultar</button>
-            </div>
-            <div>
-                <input type="number" name="cedula" placeholder="Cédula" required autocomplete="off">
-            </div>
-        </div>
-    </div>
-</form>
-</body>
+        </form>
+    </body>
+
 </html>
